@@ -1,6 +1,6 @@
 // src/inngest/client.ts
 import { Inngest } from "inngest";
-import { connectDb } from "@/config/db";
+import { dbConnect } from "@/config/db";
 import User from "@/models/User";
 
 export const inngest = new Inngest({ id: "quickcart-next" });
@@ -18,7 +18,7 @@ export const syncUserCreation = inngest.createFunction(
             email: email_addresses[0].email_address,
             imageUrl: image_url,
         }
-        await connectDb()
+        await dbConnect();
         await User.create(userData);
     }
 )
@@ -36,7 +36,7 @@ export const syncUserUpdation = inngest.createFunction(
             email: email_addresses[0].email_address,
             imageUrl: image_url,
         }
-        await connectDb()
+        await dbConnect();
         await User.findByIdAndUpdate(id, userData);
     }
 )
@@ -48,7 +48,7 @@ export const syncUserDeletion = inngest.createFunction(
     {event: 'clerk/user.deleted'},
     async ({event}) => {
         const {id} = event.data;
-        await connectDb();
+        await dbConnect();
         await User.findByIdAndDelete(id);
     }
 );
