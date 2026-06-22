@@ -1,6 +1,6 @@
 // src/inngest/client.ts
 import { Inngest } from "inngest";
-import { connectDb } from "@/lib/db";
+import { connectDb } from "@/config/db";
 import User from "@/models/User";
 
 export const inngest = new Inngest({ id: "quickcart-next" });
